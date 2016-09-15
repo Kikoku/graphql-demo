@@ -11,12 +11,10 @@
     "type": "git",
     "url": "https://github.com/Kikoku/graphql-demo"
   },
-  "author": "Collin Delphia <candrew022@gmail.com> (http://github.com/kikoku)",
-  "license": "Copyright 2016 Collin Delphia",
-  "homepage": "https://github.com/kikoku/graphql-demo",
-  "keywords": [],
   "author": "",
   "license": "ISC",
+  "homepage": "https://github.com/kikoku/graphql-demo",
+  "keywords": [],
   "dependencies": {
     "express": "^4.14.0",
     "express-graphql": "^0.5.3",
