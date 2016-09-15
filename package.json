@@ -1,0 +1,25 @@
+{
+  "name": "graphql-demo",
+  "version": "1.0.0",
+  "description": "A demo GraphQL server running on express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kikoku/graphql-demo"
+  },
+  "author": "Collin Delphia <candrew022@gmail.com> (http://github.com/kikoku)",
+  "license": "Copyright 2016 Collin Delphia",
+  "homepage": "https://github.com/kikoku/graphql-demo",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-graphql": "^0.5.3",
+    "graphql": "^0.6.2"
+  }
+}
