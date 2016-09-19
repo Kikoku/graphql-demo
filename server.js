@@ -2,6 +2,12 @@ import { graphql } from 'graphql';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import Schema from './schema';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost/graphql', (err) => {
+  if(err) console.error(err)
+  else console.log('Mongodb connected')
+})
 
 let app = express();
 const PORT = process.env.PORT || 8080;
