@@ -5,23 +5,19 @@ import {
   GraphQLString,
   GraphQLBoolean,
   GraphQLList,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLNonNull
 } from 'graphql';
+import mongoose, { Schema } from 'mongoose';
 
-var TODOs = [
-  {
-    "id": 1446412739542,
-    "title": "Read emails",
-    "completed": false
-  },
-  {
-    "id": 1446412740883,
-    "title": "Buy orange",
-    "completed": true
-  }
-];
+const todoSchema = new Schema ({
+  title: String,
+  completed: Boolean
+});
 
-var TodoType = new GraphQLObjectType({
+const Todo = mongoose.model('Todo', todoSchema);
+
+const TodoType = new GraphQLObjectType({
   name: 'todo',
   fields: function () {
     return {
