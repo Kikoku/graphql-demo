@@ -50,9 +50,39 @@ const queryType = new GraphQLObjectType({
     }
   })
 })
+
+let MutationAdd = {
+  type: TodoType,
+  description: 'Add a Todo',
+  args: {
+    title: {
+      name: 'Todo title',
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  },
+  resolve: (root, args) => {
+    let newTodo = new Todo({
+      title: args.title,
+      completed: false
+    })
+    newTodo.id = newTodo._id;
+    return new Promise((resolve, reject) => {
+      newTodo.save((err) => {
+        if(err) reject(err)
+        else resolve(newTodo)
+      })
+    });
+  }
+}
+
+let MutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    add: MutationAdd
   }
 });
 
 module.exports = new GraphQLSchema({
-  query: queryType
+  query: queryType,
+  mutation: MutationType
 });
