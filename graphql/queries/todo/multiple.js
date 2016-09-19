@@ -16,3 +16,12 @@ export default {
     });
   }
 }
+
+// Exmample query
+// {
+//   todos {
+//     title,
+//     id,
+//     completed
+//   }
+// }

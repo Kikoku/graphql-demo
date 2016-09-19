@@ -29,3 +29,12 @@ export default {
     });
   }
 };
+
+// Example addTodo
+// mutation {
+//   addTodo(
+//     title: "Mongoed"
+//   ){
+//     title
+//   }
+// }
