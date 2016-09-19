@@ -19,7 +19,7 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 const TodoType = new GraphQLObjectType({
   name: 'todo',
-  fields: function () {
+  fields: () => {
     return {
       id: {
         type: GraphQLID
@@ -34,17 +34,22 @@ const TodoType = new GraphQLObjectType({
   }
 });
 
-var queryType = new GraphQLObjectType({
+const queryType = new GraphQLObjectType({
   name: 'Query',
-  fields: function () {
-    return {
-      todos: {
-        type: new GraphQLList(TodoType),
-        resolve: function () {
-          return TODOs;
-        }
+  fields: () => ({
+    todos: {
+      type: new GraphQLList(TodoType),
+      resolve: () => {
+        return new Promise((resolve, reject) => {
+          Todo.find((err, todos) => {
+            if(err) reject(err)
+            else resolve(todos)
+          })
+        });
       }
     }
+  })
+})
   }
 });
 
