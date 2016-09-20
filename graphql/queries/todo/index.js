@@ -1,5 +1,7 @@
 import todos from './multiple';
+import todo from './single'
 
 export default {
-  todos
+  todos,
+  todo
 }
