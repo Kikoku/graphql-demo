@@ -15,6 +15,6 @@ export default {
     }
   },
   resolve(root, params, options) {
-    return User.findById(params.id).populate('bestFriend').exec();
+    return User.findById(params.id).populate('bestFriend friends').exec();
   }
 };
