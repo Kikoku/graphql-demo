@@ -10,7 +10,8 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    bestFriend: { type: UserType }
+    bestFriend: { type: UserType },
+    friends: { type: new GraphQLList(UserType)}
   })
 });
 
