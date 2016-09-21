@@ -9,7 +9,22 @@ export default {
   type: new GraphQLList(UserType),
   resolve: () => {
     return new Promise((resolve, reject) => {
-      User.find().populate('bestFriend').exec((err, users) => {
+      User.find().populate({
+        path: 'friends',
+        model: 'User',
+        populate: {
+          path: 'friends',
+          model: 'User',
+          populate: {
+            path: 'friends',
+            model: 'User',
+            populate: {
+              path: 'friends',
+              model: 'User'
+            }
+          }
+        }
+      }).exec((err, users) => {
         if(err) reject(err)
         else resolve(users)
       });
