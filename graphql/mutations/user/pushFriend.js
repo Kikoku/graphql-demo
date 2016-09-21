@@ -14,7 +14,7 @@ export default {
       name: 'Root User\'s id',
       type: GraphQLID
     },
-    bestFriendId: {
+    friendId: {
       name: 'Friend\'s id',
       type: GraphQLID
     }
@@ -22,8 +22,7 @@ export default {
   resolve: (root, args) => {
     return User.findByIdAsync(args.id)
     .then((user) => {
-      user.bestFriend = args.bestFriendId;
-      console.log(user)
+      user.friends.push(args.friendId);
       return user.saveAsync();
     })
   }
