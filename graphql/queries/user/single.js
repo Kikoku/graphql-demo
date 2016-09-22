@@ -14,7 +14,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve(root, params, options) {
-    return User.findById(params.id).populate('bestFriend friends').exec();
-  }
+  resolve: (root, args) => User.getUserById(args.id)
 };
