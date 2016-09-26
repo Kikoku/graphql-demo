@@ -12,11 +12,11 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     bestFriend: {
        type: UserType,
-       resolve: (user, args, {loaders}) => loaders.user.load(user.bestFriend.toString())
+       resolve: (user, args, {loaders}) => loaders.user.load(user.bestFriend)
     },
     friends: {
       type: new GraphQLList(UserType),
-      resolve: (user, args, {loaders}) => user.friends.map((friend) => loaders.user.load(friend.toString()))
+      resolve: (user, args, {loaders}) => loaders.user.loadMany(user.friends)
     }
   })
 });
