@@ -3,6 +3,8 @@ import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import schema from './graphql';
 import mongoose from 'mongoose';
+import DataLoader from 'dataloader';
+import { getUserById } from './loaders'
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
   if(err) console.error(err)
@@ -12,7 +14,23 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 let app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use('/', graphQLHTTP({schema: schema, pretty: true, graphiql: true}));
+app.use('/', graphQLHTTP( req => {
+
+  const userLoader = new DataLoader(
+    keys => Promise.all(keys.map(getUserById))
+  )
+
+  const loaders = {
+    user: userLoader
+  }
+
+  return {
+    context: { loaders },
+    schema: schema,
+    pretty: true,
+    graphiql: true
+  }
+}));
 
 app.listen(8080, (err) => {
   console.log(`GraphQL Server is now running on ${PORT}`);
