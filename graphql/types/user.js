@@ -4,7 +4,6 @@ import {
   GraphQLString,
   GraphQLList
 } from 'graphql';
-import User from '../models/user';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -13,11 +12,11 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     bestFriend: {
        type: UserType,
-       resolve: user => User.getUserById(user.bestFriend)
+       resolve: (user, args, {loaders}) => loaders.user.load(user.bestFriend.toString())
     },
     friends: {
       type: new GraphQLList(UserType),
-      resolve: user => user.friends.map(User.getUserById)
+      resolve: (user, args, {loaders}) => user.friends.map((friend) => loaders.user.load(friend.toString()))
     }
   })
 });
