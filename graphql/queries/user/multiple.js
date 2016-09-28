@@ -7,5 +7,5 @@ import User from '../../../models/user';
 
 export default {
   type: new GraphQLList(UserType),
-  resolve: () => User.findAsync()
+  resolve: (user, args, {loaders}) => loaders.user.loadAll()
 };
