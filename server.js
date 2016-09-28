@@ -21,10 +21,6 @@ app.use('/', graphQLHTTP( req => {
   const userLoader = new DataLoader(
     keys => Promise.all(keys.map(getUserById)),
     {
-      cacheKeyFn: key => {
-        // console.log(key);
-        return key;
-      },
       cacheMap
     }
   )
@@ -32,10 +28,6 @@ app.use('/', graphQLHTTP( req => {
   const usersLoader = new DataLoader(
     keys => Promise.all(keys.map(getUsers)),
     {
-      cacheKeyFn: key => {
-        console.log(key);
-        return key;
-      },
       cacheMap
     }
   )
