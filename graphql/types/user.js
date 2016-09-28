@@ -12,7 +12,7 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     bestFriend: {
        type: UserType,
-       resolve: (user, args, {loaders}) => loaders.user.load(user.bestFriend)
+       resolve: (user, args, {loaders}) => user.bestFriend ? loaders.user.load(user.bestFriend) : null
     },
     friends: {
       type: new GraphQLList(UserType),
