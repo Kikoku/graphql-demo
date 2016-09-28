@@ -21,15 +21,15 @@ app.use('/', graphQLHTTP( req => {
   const userLoader = new DataLoader(
     keys => Promise.all(keys.map(getUserById)),
     {
-      cacheMap
+      cacheKeyFn: key => {
+        console.log(key, 'key', typeof key.id);
+        return key.id;
+      }
     }
   )
 
   const usersLoader = new DataLoader(
-    keys => Promise.all(keys.map(getUsers)),
-    {
-      cacheMap
-    }
+    keys => Promise.all(keys.map(getUsers))
   )
 
   userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
