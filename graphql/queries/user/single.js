@@ -13,5 +13,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args, {loaders}) => loaders.user.load({id:args.id.toString(), location:'query Single'})
+  resolve: (root, args, {loaders}) => loaders.user.load(args.id.toString())
 };

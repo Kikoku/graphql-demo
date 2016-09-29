@@ -22,8 +22,7 @@ app.use('/', graphQLHTTP( req => {
     keys => Promise.all(keys.map(getUserById)),
     {
       cacheKeyFn: key => {
-        console.log(key, 'key', typeof key.id);
-        return key.id;
+        return key.toString();
       }
     }
   )
@@ -35,8 +34,7 @@ app.use('/', graphQLHTTP( req => {
   userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
 
   const loaders = {
-    user: userLoader,
-    users: usersLoader
+    user: userLoader
   }
 
   return {
