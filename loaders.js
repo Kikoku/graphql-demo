@@ -7,11 +7,6 @@ import User from './models/user';
   return user;
 }
 
-const canSee = (object, viewer) => {
-  // TODO: Create viewing logic
-  return (object.id === viewer.id)
-}
-
 
 export const getUsers = () => User.findAsync()
 .then(users => {
