@@ -35,7 +35,7 @@ app.use('/', graphQLHTTP( req => {
     }
   )
 
-  userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
+  userLoader.loadAll = usersLoader.load.bind(usersLoader)
 
   const loaders = {
     user: userLoader
