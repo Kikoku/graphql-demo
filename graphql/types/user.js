@@ -16,7 +16,7 @@ const UserType = new GraphQLObjectType({
     },
     friends: {
       type: new GraphQLList(UserType),
-      resolve: (user, args, {loaders}) => loaders.user.loadMany(user.friends)
+      resolve: (user, args, {loaders, viewer}) => user.friends.map(friend => loaders.user.load({id: friend, viewer}))
     }
   })
 });
