@@ -41,8 +41,16 @@ app.use('/', graphQLHTTP( req => {
     user: userLoader
   }
 
+  // TODO: Get viewer information from token
+  const viewer = {
+    id: '57e2900d04d8790dc84243f0'
+  }
+
   return {
-    context: { loaders },
+    context: {
+      loaders,
+      viewer
+    },
     schema: schema,
     pretty: true,
     graphiql: true
