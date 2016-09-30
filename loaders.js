@@ -6,7 +6,7 @@ const sanatizeUser = (user, viewer) => {
   user.id = user._id.toString();
   user.friends = user.friends.map(friend => friend.toString());
   user.bestFriend = user.bestFriend ? user.bestFriend.toString() : null;
-  return canSee(user, viewer) ? user : null;
+  return user;
 }
 
 const canSee = (object, viewer) => {
