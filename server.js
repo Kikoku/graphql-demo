@@ -23,16 +23,12 @@ app.use('/', graphQLHTTP( req => {
     {
       cacheKeyFn: key => {
         return key.toString();
-      },
-      cacheMap
+      }
     }
   )
 
   const usersLoader = new DataLoader(
-    keys => Promise.all(keys.map(getUsers)),
-    {
-      cacheMap
-    }
+    keys => Promise.all(keys.map(getUsers))
   )
 
   userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
