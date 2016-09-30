@@ -7,7 +7,5 @@ import User from '../../../models/user';
 
 export default {
   type: new GraphQLList(UserType),
-  resolve: (user, args, {loaders}) => {
-    return loaders.user.loadAll()
-  }
+  resolve: (user, args, {loaders, viewer}) => loaders.user.loadAll({id:'__all__', viewer})
 };
