@@ -4,7 +4,6 @@ import {
 } from 'graphql';
 
 import TodoType from '../../types/todo';
-import Todo from '../../../models/todo';
 
 export default {
   type: TodoType,
@@ -14,5 +13,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args, {loaders}) => Todo.findByIdAsync(args.id)
+  resolve: (root, args, {loaders}) => loaders.todo.load(args.id.toString())
 }

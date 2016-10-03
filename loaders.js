@@ -1,4 +1,5 @@
 import User from './models/user';
+import Todo from './models/todo';
 
 export const getUserById = (id) => User.findByIdAsync(id).then(user => {
   user = user.toJSON();
@@ -18,4 +19,22 @@ export const getUsers = () => User.findAsync()
     return user
   })
   return users;
+})
+
+export const getTodoById = (id) => Todo.findByIdAsync(id).then(todo => {
+  todo = todo.toJSON();
+  todo.id = todo._id.toString();
+  todo.author = todo.author.toString();
+  return todo;
+})
+
+export const getTodos = () => Todo.findAsync()
+.then(todos => {
+  todos.forEach(todo => {
+    todo = todo.toJSON();
+    todo.id = todo._id.toString();
+    todo.author = todo.author.toString();
+    return todo;
+  })
+  return todos;
 })
