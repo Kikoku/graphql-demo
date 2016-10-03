@@ -3,7 +3,6 @@ import {
 } from 'graphql';
 
 import UserType from '../../types/user';
-import User from '../../../models/user';
 
 export default {
   type: new GraphQLList(UserType),
@@ -11,3 +10,4 @@ export default {
     return loaders.user.loadAll()
   }
 };
+o
