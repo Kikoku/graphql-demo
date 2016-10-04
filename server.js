@@ -46,15 +46,21 @@ app.use('/', graphQLHTTP( req => {
     keys => Promise.all(keys.map(getTodos))
   )
 
-  todoLoader.loadAll = todosLoader.load.bind(todosLoader, '__all__')
+  todoLoader.loadAll = todosLoader.load.bind(todosLoader)
 
   const loaders = {
     user: userLoader,
     todo: todoLoader
   }
 
+  // TODO: Pull viewer information from auth_token
+  const viewer = {id: "57e2900d04d8790dc84243f0"};
+
   return {
-    context: { loaders },
+    context: {
+      loaders,
+      viewer
+    },
     schema: schema,
     pretty: true,
     graphiql: true
