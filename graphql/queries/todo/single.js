@@ -13,5 +13,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args, {loaders}) => loaders.todo.load(args.id.toString())
+  resolve: (root, args, {loaders, viewer}) => loaders.todo.load({id: args.id.toString(), viewer})
 }
