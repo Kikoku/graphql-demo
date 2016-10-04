@@ -21,20 +21,29 @@ export const getUsers = () => User.findAsync()
   return users;
 })
 
-export const getTodoById = (id) => Todo.findByIdAsync(id).then(todo => {
+const canSee = (object, viewer) => {
+
+  // NOTE: Verification OFF
+  // return true;
+
+  // NOTE: Verification ON
+  return object.author === viewer.id;
+
+}
+
+export const getTodoById = ({id, viewer}) => Todo.findByIdAsync(id).then(todo => {
   todo = todo.toJSON();
   todo.id = todo._id.toString();
   todo.author = todo.author.toString();
-  return todo;
+  return canSee(todo, viewer) ? todo : null;
 })
 
-export const getTodos = () => Todo.findAsync()
+export const getTodos = ({viewer}) => Todo.findAsync()
 .then(todos => {
-  todos.forEach(todo => {
+  return todos.map(todo => {
     todo = todo.toJSON();
     todo.id = todo._id.toString();
     todo.author = todo.author.toString();
-    return todo;
+    return canSee(todo, viewer) ? todo : null;
   })
-  return todos;
 })
