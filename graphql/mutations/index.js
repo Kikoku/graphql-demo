@@ -1,9 +1,7 @@
-import todo from './todo';
-import comment from './comment';
 import user from './user';
+import todo from './todo';
 
 export default {
-  ...todo,
-  ...comment,
-  ...user
+  ...user,
+  ...todo
 }

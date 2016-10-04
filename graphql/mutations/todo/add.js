@@ -1,40 +1,30 @@
 import {
-  GraphQLList,
   GraphQLNonNull,
-  GraphQLString
+  GraphQLString,
+  GraphQLID
 } from 'graphql';
 import TodoType from '../../types/todo';
-import Todo from '../../models/todo'
+import Todo from '../../../models/todo';
 
 export default {
   type: TodoType,
-  description: 'Add a Todo',
+  description: 'Add a todo',
   args: {
     title: {
-      name: 'Todo title',
+      name: 'Todo string',
       type: new GraphQLNonNull(GraphQLString)
+    },
+    author: {
+      name: 'Author ID',
+      type: new GraphQLNonNull(GraphQLID)
     }
   },
   resolve: (root, args) => {
     let newTodo = new Todo({
       title: args.title,
+      author: args.author,
       completed: false
     })
-    newTodo.id = newTodo._id;
-    return new Promise((resolve, reject) => {
-      newTodo.save((err) => {
-        if(err) reject(err)
-        else resolve(newTodo)
-      })
-    });
+    return newTodo.saveAsync();
   }
-};
-
-// Example addTodo
-// mutation {
-//   addTodo(
-//     title: "Mongoed"
-//   ){
-//     title
-//   }
-// }
+}

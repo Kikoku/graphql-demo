@@ -1,9 +1,5 @@
-import addUser from './add';
-import updateBestFriend from './updateBestFriend';
-import pushFriend from './pushFriend'
+import addUser from './add'
 
 export default {
-  addUser,
-  updateBestFriend,
-  pushFriend
+  addUser
 }

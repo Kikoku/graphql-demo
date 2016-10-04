@@ -4,7 +4,6 @@ import {
 } from 'graphql';
 
 import UserType from '../../types/user';
-import User from '../../models/user';
 
 export default {
   type: UserType,
@@ -14,5 +13,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args) => User.getUserById(args.id)
+  resolve: (root, args, {loaders}) => loaders.user.load(args.id.toString())
 };

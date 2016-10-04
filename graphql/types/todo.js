@@ -1,21 +1,25 @@
 import {
   GraphQLObjectType,
   GraphQLID,
-  GraphQLString,
-  GraphQLBoolean
-} from 'graphql'
+  GraphQLString
+} from 'graphql';
 
-export default new GraphQLObjectType({
-  name: 'todo',
-  fields: {
+import UserType from './user';
+
+const TodoType = new GraphQLObjectType({
+  name: 'Todo',
+  fields: () => ({
     id: {
       type: GraphQLID
     },
     title: {
       type: GraphQLString
     },
-    completed: {
-      type: GraphQLBoolean
+    author: {
+      type: UserType,
+      resolve: (todo, args, {loaders}) => loaders.user.load(todo.author)
     }
-  }
-});
+  })
+})
+
+export default TodoType;
