@@ -4,7 +4,8 @@ import graphQLHTTP from 'express-graphql';
 import schema from './graphql';
 import mongoose from 'mongoose';
 import DataLoader from 'dataloader';
-import { getUserById, getUsers, getTodoById, getTodos } from './loaders'
+import { getUserById, getUsers, getTodoById, getTodos } from './loaders';
+import cors from 'cors'
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
   if(err) console.error(err)
@@ -14,14 +15,8 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 let app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  console.log('headers set');
-  next();
-})
 
-app.use('/', graphQLHTTP( req => {
+app.use('/', cors(), graphQLHTTP( req => {
 
   const cacheMap = new Map();
 
