@@ -2,7 +2,6 @@ import User from '../models/user';
 import DataLoader from 'dataloader';
 
 const getUserById = (id) => {
-  console.log(id);
   return User.findByIdAsync(id)
 }
 
