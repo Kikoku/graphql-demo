@@ -4,6 +4,7 @@ import {
   GraphQLString,
   GraphQLList
 } from 'graphql';
+import userLoader from '../../loaders/user';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -12,11 +13,11 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     bestFriend: {
        type: UserType,
-       resolve: (user, args, {loaders}) => user.bestFriend ? loaders.user.load(user.bestFriend) : null
+       resolve: (user, args) => user.bestFriend ? userLoader.load(user.bestFriend) : null
     },
     friends: {
       type: new GraphQLList(UserType),
-      resolve: (user, args, {loaders}) => loaders.user.loadMany(user.friends)
+      resolve: (user, args) => userLoader.loadMany(user.friends)
     }
   })
 });

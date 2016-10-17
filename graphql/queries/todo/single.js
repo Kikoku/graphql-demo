@@ -2,6 +2,7 @@ import {
   GraphQLNonNull,
   GraphQLID
 } from 'graphql';
+import todoLoader from '../../../loaders/todo'
 
 import TodoType from '../../types/todo';
 
@@ -13,5 +14,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args, {loaders, viewer}) => loaders.todo.load({id: args.id.toString(), viewer})
+  resolve: (root, args, {viewer}) => todoLoader.load({id: args.id.toString(), viewer})
 }

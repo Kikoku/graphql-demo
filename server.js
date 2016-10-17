@@ -4,7 +4,6 @@ import graphQLHTTP from 'express-graphql';
 import schema from './graphql';
 import mongoose from 'mongoose';
 import DataLoader from 'dataloader';
-import { getUserById, getUsers, getTodoById, getTodos } from './loaders';
 import cors from 'cors'
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
@@ -18,22 +17,6 @@ const PORT = process.env.PORT || 8080;
 
 app.use('/', cors(), graphQLHTTP( req => {
 
-  const cacheMap = new Map();
-
-  const userLoader = new DataLoader(
-    keys => Promise.all(keys.map(getUserById)),
-    {
-      cacheKeyFn: key => {
-        return key.toString();
-      }
-    }
-  )
-
-  const usersLoader = new DataLoader(
-    keys => Promise.all(keys.map(getUsers))
-  )
-
-  userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
 
   const todoLoader = new DataLoader(
     keys => Promise.all(keys.map(getTodoById)),
@@ -51,7 +34,6 @@ app.use('/', cors(), graphQLHTTP( req => {
   todoLoader.loadAll = todosLoader.load.bind(todosLoader)
 
   const loaders = {
-    user: userLoader,
     todo: todoLoader
   }
 

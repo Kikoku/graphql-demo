@@ -3,6 +3,7 @@ import {
   GraphQLID,
   GraphQLString
 } from 'graphql';
+import userLoader from '../../loaders/user';
 
 import UserType from './user';
 
@@ -17,7 +18,7 @@ const TodoType = new GraphQLObjectType({
     },
     author: {
       type: UserType,
-      resolve: (todo, args, {loaders}) => loaders.user.load(todo.author)
+      resolve: (todo, args) => userLoader.load(todo.author)
     }
   })
 })

@@ -1,12 +1,11 @@
 import {
   GraphQLList
 } from 'graphql';
+import userLoader from '../../../loaders/user'
 
 import UserType from '../../types/user';
 
 export default {
   type: new GraphQLList(UserType),
-  resolve: (user, args, {loaders}) => {
-    return loaders.user.loadAll()
-  }
+  resolve: (user, args) => userLoader.loadAll()
 };

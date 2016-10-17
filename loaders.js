@@ -1,10 +1,4 @@
-import User from './models/user';
 import Todo from './models/todo';
-
-export const getUserById = (id) => User.findByIdAsync(id)
-
-export const getUsers = () => User.findAsync()
-
 
 export const getTodoById = ({id, viewer}) => Todo.findByIdAsync(id)
 .then(todo => {
