@@ -5,15 +5,6 @@ export const getUserById = (id) => User.findByIdAsync(id)
 
 export const getUsers = () => User.findAsync()
 
-const canSee = (object, viewer) => {
-
-  // NOTE: Verification OFF
-  return true;
-
-  // NOTE: Verification ON
-  // return object.author === viewer.id;
-
-}
 
 export const getTodoById = ({id, viewer}) => Todo.findByIdAsync(id)
 .then(todo => {
