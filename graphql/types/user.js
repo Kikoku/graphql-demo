@@ -5,9 +5,11 @@ import {
   GraphQLList
 } from 'graphql';
 import userLoader from '../../loaders/user';
+import SearchType from './search';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
+  interfaces: () => [SearchType],
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -18,6 +20,10 @@ const UserType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(UserType),
       resolve: (user, args) => userLoader.loadMany(user.friends)
+    },
+    searchPreviewText: {
+      type: GraphQLString,
+      resolve: (data) => `(user) ${data.name}`
     }
   })
 });
