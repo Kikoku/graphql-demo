@@ -6,9 +6,11 @@ import {
   GraphQLList
 } from 'graphql';3
 import SetType from './set';
+import SearchType from './search';
 
 const CardType = new GraphQLObjectType({
   name: 'Card',
+  interfaces: () => [SearchType],
   fields: () => ({
     id: { type: GraphQLID },
     multiverse_id: {type: GraphQLInt},
@@ -33,7 +35,11 @@ const CardType = new GraphQLObjectType({
     loyalty: {type: GraphQLInt},
     related_card_id: {type: GraphQLInt},
     colors: {type: new GraphQLList(GraphQLString)},
-    released_at: {type: GraphQLString }
+    released_at: {type: GraphQLString },
+    searchPreviewText: {
+      type: GraphQLString,
+      resolve: (data) => `(card) ${data.name}`
+    }
   })
 })
 

@@ -6,9 +6,11 @@ import {
   GraphQLList
 } from 'graphql';
 import CardType from './card';
+import SearchType from './search';
 
 const SetType = new GraphQLObjectType({
   name: 'Set',
+  interfaces: () => [SearchType],
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -26,6 +28,10 @@ const SetType = new GraphQLObjectType({
     card_ids: {
       type: new GraphQLList(CardType),
       resolve: (set, args) => CardLoader.loadMany(set.card_ids)
+    },
+    searchPreviewText: {
+      type: GraphQLString,
+      resolve: (data) => `(set) ${data.name}`
     }
   })
 })
