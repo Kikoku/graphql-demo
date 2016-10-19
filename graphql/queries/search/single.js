@@ -15,10 +15,5 @@ export default {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  resolve: (root, args, {viewer}) => {
-
-    const { text } = args;
-
-    return searchLoader({query: text, viewer})
-  }
+  resolve: (root, args, {viewer}) => searchLoader({query: args.text, viewer})
 };
