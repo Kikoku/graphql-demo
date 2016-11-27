@@ -6,8 +6,11 @@ import {
 } from 'graphql';
 import userLoader from '../../loaders/user';
 import SearchType from './search';
-import { connectionDefintions, connectionArgs } from '../connection/connections';
-import { connectionFromPromisedArray } from '../connection/arrayconnection.js';
+import { 
+  connectionDefinitions,
+  connectionArgs,
+  connectionFromPromisedArray
+} from 'graphql-relay';
 import CardType from './card'
 import User from '../../models/user';
 
@@ -44,6 +47,6 @@ const UserType = new GraphQLObjectType({
   })
 });
 
-const userConnection = connectionDefintions({ nodeType: UserType })
+const userConnection = connectionDefinitions({ nodeType: UserType })
 
 export default UserType;
