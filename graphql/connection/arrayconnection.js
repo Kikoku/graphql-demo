@@ -56,7 +56,8 @@ export function connectionFromArraySlice(arraySlice, args, meta) {
       hasPreviousPage:
         typeof last === 'number' ? startOffset > lowerBound : false,
       hasNextPage:
-        typeof first === 'number' ? endOffset < upperBound : false
+        typeof first === 'number' ? endOffset < upperBound : false,
+      count: arrayLength
     }
   };
 }

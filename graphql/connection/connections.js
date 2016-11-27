@@ -100,6 +100,10 @@ const pageInfoType = new GraphQLObjectType({
     endCursor: {
       type: GraphQLString,
       description: 'When pagination forwards, the cursor to continue.'
+    },
+    count: {
+      type: GraphQLInt,
+      description: 'Number of total items'
     }
   })
 })
