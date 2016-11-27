@@ -6,6 +6,17 @@ import {
 } from 'graphql';
 import userLoader from '../../loaders/user';
 import SearchType from './search';
+import { connectionDefintions, connectionArgs } from '../connection/connections';
+import { connectionFromPromisedArray } from '../connection/arrayconnection.js';
+import CardType from './card'
+import User from '../../models/user';
+
+function getUser(id) {
+  return User.findByIdAsync(id)
+  .then(user => {
+    return user;
+  });
+}
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -18,8 +29,13 @@ const UserType = new GraphQLObjectType({
        resolve: (user, args) => user.bestFriend ? userLoader.load(user.bestFriend) : null
     },
     friends: {
-      type: new GraphQLList(UserType),
-      resolve: (user, args) => userLoader.loadMany(user.friends)
+      type: userConnection.connectionType,
+      args: connectionArgs,
+      resolve: (user, args) => {
+        return connectionFromPromisedArray(
+        userLoader.loadMany(user.friends),
+        args
+      )}
     },
     searchPreviewText: {
       type: GraphQLString,
@@ -27,5 +43,7 @@ const UserType = new GraphQLObjectType({
     }
   })
 });
+
+const userConnection = connectionDefintions({ nodeType: UserType })
 
 export default UserType;
