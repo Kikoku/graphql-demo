@@ -1,11 +1,11 @@
 import {
   GraphQLList
 } from 'graphql';
-import userLoader from '../../../loaders/user'
+import User from '../../../models/user';
 
 import UserType from '../../types/user';
 
 export default {
   type: new GraphQLList(UserType),
-  resolve: (user, args) => userLoader.loadAll()
+  resolve: (user, args) => User.findAsync()
 };
