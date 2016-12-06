@@ -4,6 +4,12 @@ import {
   GraphQLString,
   GraphQLList
 } from 'graphql';
+import {
+  connectionFromPromisedArray,
+  connectionArgs,
+  connectionDefinitions
+} from 'graphql-relay'
+
 import userLoader from '../../loaders/user';
 import SearchType from './search';
 
@@ -18,8 +24,13 @@ const UserType = new GraphQLObjectType({
        resolve: (user, args) => user.bestFriend ? userLoader.load(user.bestFriend) : null
     },
     friends: {
-      type: new GraphQLList(UserType),
-      resolve: (user, args) => userLoader.loadMany(user.friends)
+      type: UserConnection,
+      args: connectionArgs,
+      resolve: (user, args) => {
+        return connectionFromPromisedArray(
+        userLoader.loadMany(user.friends),
+        args
+      )}
     },
     searchPreviewText: {
       type: GraphQLString,
@@ -27,5 +38,7 @@ const UserType = new GraphQLObjectType({
     }
   })
 });
+
+const {connectionType: UserConnection} = connectionDefinitions({ nodeType: UserType })
 
 export default UserType;
