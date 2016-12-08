@@ -75,8 +75,14 @@ function rootConnection(name, type) {
     type: connectionType,
     args: connectionArgs,
     resolve: (_, args) => {
-      var { objects, totalCount } = getObjectsByType(type, args)
-      return connectionFromPromisedArray(User.findAsync(),args)
+      return Promise.all([
+        User.findAsync(),
+        User.countAsync()
+      ]).then(([objects = [], totalCount = 0]) => {
+        return {
+          ...connectionFromArray(objects, args),
+        }
+      })
     }
   }
 }
