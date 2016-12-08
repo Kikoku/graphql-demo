@@ -68,7 +68,19 @@ function rootConnection(name, type) {
   var graphqlType = typeToGraphQLType(type);
   var {connectionType} = connectionDefinitions({
     name: name,
-    nodeType: graphqlType
+    nodeType: graphqlType,
+    connectionFields: () => ({
+      totalCount: {
+        type: GraphQLInt,
+        resolve: (conn) => conn.totalCount,
+        description: 'A count of the total number of objects in this connection.'
+      },
+      [type]: {
+        type: new GraphQLList(graphqlType),
+        resolve: (conn) => conn.edges.map((edge) => edge.node),
+        description: 'A list of all of the objects returned in the connection. This is a convenience field provided for quickly exploring the API when no edge data is needed.'
+      }
+    })
   });
 
   return {
@@ -81,6 +93,7 @@ function rootConnection(name, type) {
       ]).then(([objects = [], totalCount = 0]) => {
         return {
           ...connectionFromArray(objects, args),
+          totalCount
         }
       })
     }
