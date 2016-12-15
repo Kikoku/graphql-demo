@@ -1,5 +1,5 @@
-import User from '../models/user';
 import DataLoader from 'dataloader';
+import User from '../../models/user';
 
 const getUserById = (id) => {
   return User.findByIdAsync(id)
@@ -15,3 +15,14 @@ const userLoader = new DataLoader(
 )
 
 export default userLoader;
+
+export const getObjectById = (type, id) => {
+
+  const types = {
+    user: getUserById
+  }
+
+  console.log(types[type](id));
+
+  return types[type](id)
+}

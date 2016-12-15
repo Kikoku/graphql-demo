@@ -1,6 +1,7 @@
 import { graphql } from 'graphql';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
+import schema from './src/schema';
 import mongoose from 'mongoose';
 import cors from 'cors'
 
