@@ -36,7 +36,7 @@ const UserType = new GraphQLObjectType({
       )}
     }
   }),
-  interfaces: [nodeInterface]
+  interfaces: () => [nodeInterface]
 });
 
 export const { connectionType: UserConnection } = connectionDefinitions({
@@ -44,7 +44,7 @@ export const { connectionType: UserConnection } = connectionDefinitions({
   connectionFields: () => ({
     totalCount: {
       type: GraphQLInt,
-      description: 'A count of the total number of videos in this connection.',
+      description: 'A count of the total number of users in this connection.',
       resolve: (conn) => conn.edges.length
     }
   })
