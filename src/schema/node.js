@@ -3,6 +3,7 @@ import {
   fromGlobalId
 } from 'graphql-relay';
 import UserType from './types/user';
+import TodoType from './types/todo';
 import { getObjectById } from './apiHelpers';
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
@@ -13,6 +14,9 @@ export const { nodeInterface, nodeField } = nodeDefinitions(
   (object) => {
     if(object.name) {
       return UserType;
+    }
+    if(object.title) {
+      return TodoType
     }
     return null;
   }
