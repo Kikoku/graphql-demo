@@ -10,6 +10,7 @@ import {
   connectionFromPromisedArray,
   connectionArgs
 } from 'graphql-relay';
+import { mutationType } from './mutations';
 import userLoader, { todoLoader } from './apiHelpers';
 import UserType, { UserConnection } from './types/user';
 import TodoType, { TodoConnection } from './types/todo';
@@ -60,4 +61,7 @@ const queryType = new GraphQLObjectType({
   })
 })
 
-export default new GraphQLSchema({query: queryType})
+export default new GraphQLSchema({
+  query: queryType,
+  mutation: mutationType
+})
