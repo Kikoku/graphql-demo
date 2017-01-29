@@ -18,15 +18,15 @@ app.use('/', cors(), graphQLHTTP( req => {
 
 
   // TODO: Pull viewer information from auth_token
-  const viewer = {id: "57e2900d04d8790dc84243f0"};
+  const viewer = {id: "57e46b681dbd903863fae6a9"};
 
   return {
-    context: {
-      viewer
-    },
     schema: schema,
     pretty: true,
-    graphiql: true
+    graphiql: true,
+    rootValue: {
+      viewer
+    }
   }
 }));
 

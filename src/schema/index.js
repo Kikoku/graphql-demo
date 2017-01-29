@@ -15,6 +15,7 @@ import UserType, { UserConnection } from './types/user';
 import ViewerType from './types/viewer';
 import User from '../../models/user';
 import { nodeField } from './node';
+import userLoader from './apiHelpers';
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -22,7 +23,7 @@ const queryType = new GraphQLObjectType({
     node: nodeField,
     viewer: {
       type: ViewerType,
-      resolve: (_, args, context, ast) => ({name: 'Collin'})
+      resolve: (_, args, context, {rootValue}) => userLoader.load(rootValue.viewer.id)
     }
   })
 })
