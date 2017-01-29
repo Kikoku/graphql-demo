@@ -3,7 +3,8 @@ import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import schema from './src/schema';
 import mongoose from 'mongoose';
-import cors from 'cors'
+import cors from 'cors';
+import jwt from 'jsonwebtoken';
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
   if(err) console.error(err)
@@ -11,6 +12,11 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 })
 
 let app = express();
+
+if (app.get('env') === 'development') {
+  require('dotenv').config();
+}
+
 const PORT = process.env.PORT || 8080;
 
 
