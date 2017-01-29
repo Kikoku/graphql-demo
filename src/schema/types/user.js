@@ -18,7 +18,7 @@ import { nodeInterface  } from '../node';
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: globalIdField(),
+    id: globalIdField('User'),
     name: {
       type: GraphQLString
     },

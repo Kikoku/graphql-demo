@@ -12,6 +12,7 @@ import {
 } from 'graphql-relay';
 import { mutationType } from './mutations';
 import UserType, { UserConnection } from './types/user';
+import ViewerType from './types/viewer';
 import User from '../../models/user';
 import { nodeField } from './node';
 
@@ -19,23 +20,9 @@ const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
     node: nodeField,
-    user: {
-      type: UserType,
-      args: {
-        id: {
-          type: new GraphQLNonNull(GraphQLID),
-          description: 'ID of a User.'
-        }
-      },
-      resolve: (_, args) => userLoader.load(args.id)
-    },
-    users: {
-      type: UserConnection,
-      args: connectionArgs,
-      resolve: (_, args) => connectionFromPromisedArray(
-        User.findAsync(),
-        args
-      )
+    viewer: {
+      type: ViewerType,
+      resolve: (_, args, context, ast) => ({name: 'Collin'})
     }
   })
 })
