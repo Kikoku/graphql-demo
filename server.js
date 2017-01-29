@@ -26,10 +26,8 @@ app.use('/', cors(), graphQLHTTP( req => {
 
   let decoded = jwt.decode(req.headers.authorization, process.env.JWT_SECRET)
   if(decoded) {
-    console.log('decoded');
     viewer = decoded._doc
   } else {
-    console.log('anon');
     viewer = {
       name: 'Anonymous'
     }
