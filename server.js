@@ -22,9 +22,19 @@ const PORT = process.env.PORT || 8080;
 
 app.use('/', cors(), graphQLHTTP( req => {
 
+  let viewer = {}
 
-  // TODO: Pull viewer information from auth_token
-  const viewer = {id: "57e46b681dbd903863fae6a9"};
+  let decoded = jwt.decode(req.headers.authorization, process.env.JWT_SECRET)
+  if(decoded) {
+    console.log('decoded');
+    viewer = decoded._doc
+  } else {
+    console.log('anon');
+    viewer = {
+      name: 'Anonymous'
+    }
+  }
+
 
   return {
     schema: schema,
