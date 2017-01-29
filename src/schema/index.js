@@ -23,7 +23,7 @@ const queryType = new GraphQLObjectType({
     node: nodeField,
     viewer: {
       type: ViewerType,
-      resolve: (_, args, context, {rootValue}) => userLoader.load(rootValue.viewer.id)
+      resolve: (_, args, context, {rootValue}) => rootValue.viewer
     }
   })
 })
