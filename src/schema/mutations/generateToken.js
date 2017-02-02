@@ -20,7 +20,7 @@ export const generateToken = mutationWithClientMutationId({
     token: {
       type: GraphQLString,
       resolve: (user) => {
-        let token = jwt.sign(user, process.env.JWT_SECRET);
+        let token = jwt.sign({ viewer: user }, process.env.JWT_SECRET);
         return (token)
       }
     }

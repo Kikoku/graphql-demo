@@ -1,5 +1,6 @@
 import {
   GraphQLObjectType,
+  GraphQLString,
   GraphQLSchema,
   GraphQLNonNull,
   GraphQLID,
@@ -16,6 +17,7 @@ import ViewerType from './types/viewer';
 import User from '../../models/user';
 import { nodeField } from './node';
 import userLoader from './apiHelpers';
+import jwt from 'jsonwebtoken'
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -23,7 +25,19 @@ const queryType = new GraphQLObjectType({
     node: nodeField,
     viewer: {
       type: ViewerType,
-      resolve: (_, args, context, {rootValue}) => rootValue.viewer
+      args: {
+        token: {
+          type: GraphQLString
+        }
+      },
+      resolve: (_, {token}, context, {rootValue}) => {
+        if(token) {
+          let { viewer } = jwt.verify(token, process.env.JWT_SECRET);
+          return viewer;
+        } else {
+          return { name: 'Guest' }
+        }
+      }
     }
   })
 })
