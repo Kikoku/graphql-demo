@@ -19,10 +19,11 @@ export const generateToken = mutationWithClientMutationId({
   outputFields: {
     token: {
       type: GraphQLString,
-      resolve: (user) => {
-        let token = jwt.sign(user, process.env.JWT_SECRET);
-        return (token)
-      }
+      resolve: (user) => jwt.sign(user, process.env.JWT_SECRET)
+    },
+    viewer: {
+      type: UserType,
+      resolve: (user) => user
     }
   },
   mutateAndGetPayload: ({name}) => {
