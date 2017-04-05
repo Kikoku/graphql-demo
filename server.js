@@ -9,6 +9,10 @@ import DataLoader from 'dataloader'
 let app = express();
 const PORT = process.env.PORT || 8080;
 
+if (app.get('env') === 'development') {
+  require('dotenv').config();
+}
+
 let connection = mysql.createConnection({
   host: process.env.SQL_HOST,
   user: process.env.SQL_USER,
