@@ -6,20 +6,19 @@ import cors from 'cors';
 import mysql from 'mysql';
 import DataLoader from 'dataloader'
 
+let app = express();
+const PORT = process.env.PORT || 8080;
 
 let connection = mysql.createConnection({
-  host: 'us-cdbr-iron-east-03.cleardb.net',
-  user: 'bb7ff83606dc2b',
-  password: 'd35ace17',
-  database: 'heroku_7b1fd0bb898f151',
+  host: process.env.SQL_HOST,
+  user: process.env.SQL_USER,
+  password: process.env.SQL_PASS,
+  database: process.env.SQL_DB,
 });
 
 connection.connect((err) => {
   if (err) console.log(err);
 });
-
-let app = express();
-const PORT = process.env.PORT || 8080;
 
 
 const getUserById = (id) => (

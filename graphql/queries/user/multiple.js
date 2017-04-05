@@ -1,7 +1,6 @@
 import {
   GraphQLList
 } from 'graphql';
-import userLoader from '../../../loaders/user'
 
 import UserType from '../../types/user';
 
