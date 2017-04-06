@@ -6,13 +6,16 @@ import UserType from '../../types/user';
 
 export default {
   type: new GraphQLList(UserType),
-  resolve: (user, args, { connection, userLoader }) => {
+  resolve: (user, args, { pool }) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM user', (err, res) => {
-        if(err) {
-          reject(err)
-        }
-        resolve(res)
+      pool.getConnection((err, connection) => {
+        connection.query('SELECT * FROM user', (err, res) => {
+          connection.release();
+          if(err) {
+            reject(err)
+          }
+          resolve(res)
+        })
       })
     })
   }

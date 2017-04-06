@@ -15,23 +15,13 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     friends: {
       type: new GraphQLList(UserType),
-      resolve: (user, args, { connection, userLoader }) => {
-        return new Promise((resolve, reject) => {
-          connection.query(`
-            SELECT *
-            FROM friends
-            WHERE friends.friendA=${user.idUser} OR friends.friendB=${user.idUser}
-          `, (err, res) => {
-            if(err) reject(err);
-            resolve(res)
-          })
-        }).then(results => {
+      resolve: (user, args, { pool, friendsLoader, userLoader }) => {
+
+        return friendsLoader.load(user.idUser).then(results => {
           var promises = results.map(function(friendRelationship) {
             return userLoader.load(friendRelationship.friendA === user.idUser ? friendRelationship.friendB : friendRelationship.friendA)
           })
-          return Promise.all(promises).then(response => {
-            return response
-          })
+          return Promise.all(promises)
         })
       }
     }
