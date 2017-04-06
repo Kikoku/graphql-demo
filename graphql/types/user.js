@@ -16,7 +16,6 @@ const UserType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(UserType),
       resolve: (user, args, { pool, friendsLoader, userLoader }) => {
-
         return friendsLoader.load(user.idUser).then(results => {
           var promises = results.map(function(friendRelationship) {
             return userLoader.load(friendRelationship.friendA === user.idUser ? friendRelationship.friendB : friendRelationship.friendA)

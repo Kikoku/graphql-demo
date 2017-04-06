@@ -1,12 +1,8 @@
-import {
-  GraphQLObjectType,
-  GraphQLSchema
-} from 'graphql';
-import queries from './queries';
+import { GraphQLSchema} from 'graphql';
+import { queryType } from './queries';
+import { mutationType } from './mutations';
 
 export default new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: queries
-  })
+  query: queryType,
+  mutation: mutationType
 })
