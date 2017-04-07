@@ -5,9 +5,7 @@ const getUserById = (id) => {
   return User.findByIdAsync(id)
 }
 
-const getUsers = () => User.findAsync()
-
-const userLoader = new DataLoader(
+const createUserLoader = () => new DataLoader(
   keys => Promise.all(keys.map(getUserById)),
   {
     cacheKeyFn: key => {
@@ -16,10 +14,4 @@ const userLoader = new DataLoader(
   }
 )
 
-const usersLoader = new DataLoader(
-  keys => Promise.all(keys.map(getUsers))
-)
-
-userLoader.loadAll = usersLoader.load.bind(usersLoader, '__all__')
-
-export default userLoader;
+export default createUserLoader;

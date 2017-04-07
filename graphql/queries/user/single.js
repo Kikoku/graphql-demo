@@ -2,8 +2,6 @@ import {
   GraphQLNonNull,
   GraphQLID
 } from 'graphql';
-import userLoader from '../../../loaders/user'
-
 import UserType from '../../types/user';
 
 export default {
@@ -14,5 +12,5 @@ export default {
       type: new GraphQLNonNull(GraphQLID)
     }
   },
-  resolve: (root, args) => userLoader.load(args.id.toString())
+  resolve: (user, args, { userLoader }) => userLoader.load(args.id.toString())
 };

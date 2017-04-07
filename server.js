@@ -3,7 +3,9 @@ import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import schema from './graphql';
 import mongoose from 'mongoose';
-import cors from 'cors'
+import cors from 'cors';
+import Dataloader from 'dataloader';
+import createLoaders from './loaders';
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
   if(err) console.error(err)
@@ -22,7 +24,8 @@ app.use('/', cors(), graphQLHTTP( req => {
 
   return {
     context: {
-      viewer
+      viewer,
+      ...createLoaders
     },
     schema: schema,
     pretty: true,
