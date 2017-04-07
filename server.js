@@ -25,7 +25,7 @@ app.use('/', cors(), graphQLHTTP( req => {
   return {
     context: {
       viewer,
-      ...createLoaders
+      ...createLoaders()
     },
     schema: schema,
     pretty: true,
