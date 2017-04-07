@@ -7,24 +7,27 @@ import cors from 'cors';
 import Dataloader from 'dataloader';
 import createLoaders from './loaders';
 
-mongoose.connect('mongodb://localhost/graphql', (err) => {
-  if(err) console.error(err)
-  else console.log('Mongodb connected')
-})
-
 let app = express();
 const PORT = process.env.PORT || 8080;
 
+mongoose.connect('mongodb://localhost/graphql', (err) => {
+  if(err){
+    console.error(err)
+  } else {
+
+    console.log('Mongodb connected');
+
+    app.listen(PORT, (err) => {
+      console.log(`GraphQL Server is now running on ${PORT}`);
+    })
+  }
+
+})
 
 app.use('/', cors(), graphQLHTTP( req => {
 
-
-  // TODO: Pull viewer information from auth_token
-  const viewer = {id: "57e2900d04d8790dc84243f0"};
-
   return {
     context: {
-      viewer,
       ...createLoaders()
     },
     schema: schema,
@@ -32,7 +35,3 @@ app.use('/', cors(), graphQLHTTP( req => {
     graphiql: true
   }
 }));
-
-app.listen(8080, (err) => {
-  console.log(`GraphQL Server is now running on ${PORT}`);
-})
