@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import Dataloader from 'dataloader';
 import createLoaders from './loaders';
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session)
 
 let app = express();
 const PORT = process.env.PORT || 8080;
@@ -24,7 +26,26 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 
 })
 
-app.use('/', cors(), graphQLHTTP( req => {
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}))
+
+app.use((req, res, next) => {
+  var views = req.session.views;
+
+  if(!views) {
+    views = req.session.views = {};
+  }
+
+  views['page'] = (views['page'] || 0) + 1;
+
+  next()
+})
+
+app.use('/', cors(), graphQLHTTP( (req, res) => {
 
   return {
     context: {
