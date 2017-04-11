@@ -6,8 +6,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import Dataloader from 'dataloader';
 import createLoaders from './loaders';
+import jwt from 'jsonwebtoken';
 
 let app = express();
+app.disable('x-powered-by')
 const PORT = process.env.PORT || 8080;
 
 mongoose.connect('mongodb://localhost/graphql', (err) => {
@@ -24,11 +26,30 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 
 })
 
+app.use('/', (req, res, next) => {
+
+  req.viewer = {
+    name: 'guest',
+    id: 'guest'
+  }
+
+  if(req.headers.authorization) {
+    try {
+      req.viewer = jwt.verify(req.headers.authorization, 'secret')
+    } catch(err) {
+      // NOTE: Catch errors
+    }
+  }
+
+  next();
+})
+
 app.use('/', cors(), graphQLHTTP( req => {
 
   return {
     context: {
-      ...createLoaders()
+      ...createLoaders(),
+      viewer: req.viewer
     },
     schema: schema,
     pretty: true,
