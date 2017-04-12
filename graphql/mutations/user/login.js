@@ -3,6 +3,7 @@ import {
   GraphQLString
 } from 'graphql';
 import jwt from 'jsonwebtoken';
+import User from '../../../models/user';
 
 export default {
   type: GraphQLString,
@@ -16,9 +17,12 @@ export default {
     }
   },
   resolve: (_, { name, password }) => {
-    return jwt.sign({
-      name: 'token test',
-      id: 'abc456'
-    }, 'secret')
+    return User.findOneAsync({name: new RegExp(`${name}`, 'i')})
+    .then((user) => {
+      return jwt.sign({
+        name: user.name,
+        id: user.id
+      }, 'secret')
+    });
   }
 }
