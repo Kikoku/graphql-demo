@@ -8,6 +8,7 @@ import Dataloader from 'dataloader';
 import createLoaders from './loaders';
 import jwt from 'jsonwebtoken';
 import User from './models/user'
+import RefreshToken from './models/refreshToken';
 
 let app = express();
 app.disable('x-powered-by');
@@ -31,6 +32,13 @@ mongoose.connect('mongodb://localhost/graphql', (err) => {
 })
 
 app.post('/login', (req, res) => {
+
+  let new_r = new RefreshToken({
+    userId: "57e2900d04d8790dc84243f0"
+  })
+
+  new_r.saveAsync();
+
   const _r = jwt.sign(
     {
       userId: "57e2900d04d8790dc84243f0"
